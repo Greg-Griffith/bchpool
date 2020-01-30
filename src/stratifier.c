@@ -6791,7 +6791,8 @@ static user_instance_t *generate_remote_user(ckpool_t *ckp, const char *workerna
 	user = get_create_user(sdata, username, &new_user);
 
 	/* Is this a btc address based username? */
-	if (!ckp->proxy && (new_user || !user->btcaddress) && (len > 26 && len < 35))
+	/* len of 53 is cashaddr with prefix, len of 41 is without prefix */
+	if (!ckp->proxy && (new_user || !user->btcaddress) && ((len > 26 && len < 35) || len == 53 || len == 41))
 		user->btcaddress = generator_checkaddr(ckp, username, &user->script);
 	if (new_user) {
 		LOGNOTICE("Added new remote user %s%s", username, user->btcaddress ?
