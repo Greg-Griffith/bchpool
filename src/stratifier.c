@@ -1297,11 +1297,13 @@ static txntable_t *wb_merkle_bin_txns(ckpool_t *ckp, sdata_t *sdata, workbase_t 
 
 			arr_val = json_array_get(txn_array, i);
 
-			// Post-segwit, txid returns the tx hash without witness data
-			txid = json_string_value(json_object_get(arr_val, "txid"));
-			hash = json_string_value(json_object_get(arr_val, "hash"));
+			// txid = json_string_value(json_object_get(arr_val, "txid"));
+			// hash = json_string_value(json_object_get(arr_val, "hash"));
+			txid = json_string_value(json_object_get(arr_val, "hash"));
+			/*
 			if (!txid)
 				txid = hash;
+			*/
 			if (unlikely(!txid)) {
 				LOGERR("Missing txid for transaction in wb_merkle_bins");
 				goto out;
